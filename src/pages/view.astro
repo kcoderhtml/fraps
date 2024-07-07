@@ -55,6 +55,16 @@ for (let i = 0; i < segments; i++) {
 
 	allTracks.push(topTracks.items);
 }
+
+const userData = await fetch("https://api.spotify.com/v1/me", {
+	headers: {
+		Authorization: `Bearer ${spotifyToken}`,
+	},
+}).then((response) => response.json());
+
+if (userData.error) {
+	return Astro.redirect(`/?error=${userData.error.message}`);
+}
 ---
 
 <html lang="en">

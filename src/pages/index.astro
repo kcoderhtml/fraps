@@ -18,6 +18,10 @@ const params = new URLSearchParams({
 	show_dialog: "true",
 	state: generateRandomString(16),
 });
+
+const spotifyToken = Astro.cookies.get("token")?.value;
+
+const error = Astro.url.searchParams.get("error");
 ---
 
 <html lang="en">
@@ -29,11 +33,36 @@ const params = new URLSearchParams({
 
 		<title>Login</title>
 	</head>
-	<body>
-		<h1>Login</h1>
+	<body class="flex flex-col items-center justify-center h-screen">
+		<h1 class="text-6xl font-bold text-center m-10">Login</h1>
 
-		<!-- login to spotify -->
-		<p>Please login to Spotify to continue</p>
-		<a href=`https://accounts.spotify.com/authorize?${params}`>Login</a>
+		<!-- if there is an error, show the error message -->
+		{
+			error && (
+				<p class="text-center text-2xl font-bold m-7 text-red-600">{error}</p>
+			)
+		}
+
+		{
+			!error && !spotifyToken && (
+				<p class="text-center text-2xl font-bold m-7">
+					Please login to Spotify to continue
+				</p>
+				<a
+					href=`https://accounts.spotify.com/authorize?${params}`
+					class="text-center text-2xl font-bold mb-12 text-cyan-700">Login</a
+				>
+			)
+		}
+
+		<!-- if the user is already logged in, redirect to the view page automatically with a countdown -->
+		{
+			spotifyToken && !error && (
+				<a href="/view" class="text-center text-2xl text-cyan-600 font-bold">
+					You have a saved token so you can skip the login page (click here to
+					go to the view page)
+				</a>
+			)
+		}
 	</body>
 </html>
