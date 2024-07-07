@@ -12,7 +12,7 @@ if (!state && spotifyToken === undefined) {
 	return Astro.redirect(`/`);
 }
 
-if (spotifyToken === undefined) {
+if (state && code) {
 	const response = await fetch("https://accounts.spotify.com/api/token", {
 		method: "POST",
 		headers: {
@@ -75,13 +75,29 @@ console.log(topTracks);
 					const radius = (2 * topTracks.items.length) / 10; // Adjust this value to control circle size
 
 					const x = radius * Math.cos(theta);
-					const y = 1.5; // Rotate around the center by setting y position to 0
+					const y = 1.5; // Adjust this value if you need the images to be at a different height
 					const z = radius * Math.sin(theta);
+
+					// Calculate the yaw and pitch to face the center (0, 0, 0)
+					const direction = [0 - x, 0 - y, 0 - z];
+					const magnitude = Math.sqrt(
+						direction[0] ** 2 + direction[1] ** 2 + direction[2] ** 2
+					);
+					const directionNorm = direction.map((d) => d / magnitude);
+
+					const [d_x, d_y, d_z] = directionNorm;
+					const yaw = Math.atan2(d_x, d_z);
+					const pitch = Math.atan2(d_y, Math.sqrt(d_x ** 2 + d_z ** 2));
+					const roll = 0;
+
+					const yawDegrees = yaw * (180 / Math.PI);
+					const pitchDegrees = pitch * (180 / Math.PI);
 
 					return (
 						<a-image
 							key={track.id}
 							position={`${x} ${y} ${z}`}
+							rotation={`${pitchDegrees} ${yawDegrees} ${roll}`}
 							src={track.album.images[0].url}
 							color="#4CC3D9"
 						/>
