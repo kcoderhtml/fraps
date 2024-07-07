@@ -71,9 +71,10 @@ console.log(topTracks);
 		<a-scene>
 			{
 				topTracks.items.map((track) => (
-					<a-box
+					<a-image
 						key={track.id}
 						position={`${track.track_number - 1} 0.5 -3`}
+						src={track.album.images[0].url}
 						rotation="0 45 0"
 						color="#4CC3D9"
 					/>
