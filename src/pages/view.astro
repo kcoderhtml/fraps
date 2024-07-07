@@ -1,0 +1,42 @@
+---
+const params = Astro.url.searchParams;
+
+const state = params.get("state");
+const code = params.get("code");
+
+console.log(state, code);
+
+if (!state) {
+	// redirect to login page
+	return Astro.redirect(`/`);
+}
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+
+		<script is:inline src="https://aframe.io/releases/1.6.0/aframe.min.js"
+		></script>
+
+		<title>Spotify View</title>
+	</head>
+	<body>
+		<a-scene>
+			<a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9"></a-box>
+			<a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>
+			<a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"
+			></a-cylinder>
+			<a-plane
+				position="0 0 -4"
+				rotation="-90 0 0"
+				width="4"
+				height="4"
+				color="#7BC8A4"></a-plane>
+			<a-sky color="#ECECEC"></a-sky>
+		</a-scene>
+	</body>
+</html>

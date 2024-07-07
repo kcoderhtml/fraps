@@ -1,0 +1,39 @@
+---
+function generateRandomString(length: number) {
+	let result = "";
+	const characters =
+		"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+	const charactersLength = characters.length;
+	for (let i = 0; i < length; i++) {
+		result += characters.charAt(Math.floor(Math.random() * charactersLength));
+	}
+	return result;
+}
+
+const params = new URLSearchParams({
+	client_id: import.meta.env.SPOTIFY_CLIENT_ID,
+	response_type: "code",
+	redirect_uri: "http://localhost:8888/view",
+	scope: "user-read-private user-read-email",
+	show_dialog: "true",
+	state: generateRandomString(16),
+});
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+
+		<title>Login</title>
+	</head>
+	<body>
+		<h1>Login</h1>
+
+		<!-- login to spotify -->
+		<p>Please login to Spotify to continue</p>
+		<a href=`https://accounts.spotify.com/authorize?${params}`>Login</a>
+	</body>
+</html>
