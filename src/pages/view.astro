@@ -44,7 +44,7 @@ if (spotifyToken === undefined) {
 
 // get the users top tracks
 const topTracks = await fetch(
-	`https://api.spotify.com/v1/me/top/tracks?limit=10`,
+	`https://api.spotify.com/v1/me/top/tracks?limit=30`,
 	{
 		headers: {
 			Authorization: `Bearer ${spotifyToken}`,
@@ -70,14 +70,23 @@ console.log(topTracks);
 	<body>
 		<a-scene>
 			{
-				topTracks.items.map((track, index) => (
-					<a-image
-						key={track.id}
-						position={`${index * 1.5} 0.5 -3`}
-						src={track.album.images[0].url}
-						color="#4CC3D9"
-					/>
-				))
+				topTracks.items.map((track, index) => {
+					const theta = (index / topTracks.items.length) * 2 * Math.PI;
+					const radius = (2 * topTracks.items.length) / 10; // Adjust this value to control circle size
+
+					const x = radius * Math.cos(theta);
+					const y = 1.5; // Rotate around the center by setting y position to 0
+					const z = radius * Math.sin(theta);
+
+					return (
+						<a-image
+							key={track.id}
+							position={`${x} ${y} ${z}`}
+							src={track.album.images[0].url}
+							color="#4CC3D9"
+						/>
+					);
+				})
 			}
 			<a-sky color="#3b3c47"></a-sky>
 		</a-scene>
