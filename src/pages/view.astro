@@ -21,7 +21,7 @@ if (spotifyToken === undefined) {
 		},
 		body: new URLSearchParams({
 			code: code!,
-			redirect_uri: "http://localhost:8888/view",
+			redirect_uri: Astro.url.origin + "/view",
 			grant_type: "authorization_code",
 		}),
 	});

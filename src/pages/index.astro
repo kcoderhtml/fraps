@@ -13,7 +13,7 @@ function generateRandomString(length: number) {
 const params = new URLSearchParams({
 	client_id: import.meta.env.SPOTIFY_CLIENT_ID,
 	response_type: "code",
-	redirect_uri: "http://localhost:8888/view",
+	redirect_uri: Astro.url.origin + "/view",
 	scope: "user-read-private user-read-email user-top-read",
 	show_dialog: "true",
 	state: generateRandomString(16),
