@@ -66,6 +66,10 @@ for (let i = 0; i < segments; i++) {
 
 		<script is:inline src="https://aframe.io/releases/1.6.0/aframe.min.js"
 		></script>
+		<script
+			is:inline
+			src="https://unpkg.com/aframe-event-set-component@3.0.3/dist/aframe-event-set-component.min.js"
+		></script>
 
 		<title>Spotify View</title>
 	</head>
@@ -103,6 +107,7 @@ for (let i = 0; i < segments; i++) {
 								position={`${x} ${y} ${z}`}
 								rotation={`${pitchDegrees} ${yawDegrees} ${roll}`}
 								src={track.album.images[0].url}
+								data-sound={track.preview_url}
 								color="#4CC3D9"
 							/>
 						);
@@ -114,5 +119,33 @@ for (let i = 0; i < segments; i++) {
 				<a-cursor></a-cursor>
 			</a-camera>
 		</a-scene>
+
+		<script is:inline>
+			const tracks = document.querySelectorAll("a-image");
+			tracks.forEach((track) => {
+				let audio = null;
+
+				track.addEventListener("mouseenter", () => {
+					track.setAttribute("color", "#8FF7FF");
+					// play the track
+					console.log(track.getAttribute("data-sound"));
+					// check if the audio element is already playing
+					if (audio && audio.paused) {
+						audio.play();
+					} else if (!audio) {
+						audio = new Audio(track.getAttribute("data-sound"));
+						audio.play();
+					}
+				});
+				track.addEventListener("mouseleave", () => {
+					track.setAttribute("color", "#4CC3D9");
+
+					// pause the track
+					if (audio) {
+						audio.pause();
+					}
+				});
+			});
+		</script>
 	</body>
 </html>
