@@ -45,13 +45,17 @@ const error = Astro.url.searchParams.get("error");
 
 		{
 			!error && !spotifyToken && (
-				<p class="text-center text-2xl font-bold m-7">
-					Please login to Spotify to continue
-				</p>
-				<a
-					href=`https://accounts.spotify.com/authorize?${params}`
-					class="text-center text-2xl font-bold mb-12 text-cyan-700">Login</a
-				>
+				<>
+					<p class="text-center text-2xl font-bold m-7">
+						Please login to Spotify to continue
+					</p>
+					<a
+						href={`https://accounts.spotify.com/authorize?${params}`}
+						class="text-center text-2xl font-bold mb-12 text-cyan-700"
+					>
+						Login
+					</a>
+				</>
 			)
 		}
 
