@@ -98,6 +98,7 @@ for (let i = 0; i < segments; i++) {
 
 						return (
 							<a-image
+								id={`track${index}`}
 								key={track.id}
 								position={`${x} ${y} ${z}`}
 								rotation={`${pitchDegrees} ${yawDegrees} ${roll}`}
@@ -109,6 +110,9 @@ for (let i = 0; i < segments; i++) {
 				})
 			}
 			<a-sky color="#3b3c47"></a-sky>
+			<a-camera>
+				<a-cursor></a-cursor>
+			</a-camera>
 		</a-scene>
 	</body>
 </html>
