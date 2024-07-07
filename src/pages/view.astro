@@ -75,6 +75,12 @@ for (let i = 0; i < segments; i++) {
 	</head>
 	<body>
 		<a-scene>
+			<!-- text welcomeing the user -->
+			<a-text
+				value={`Welcome to Spoti-Fraps ${userData.display_name}\n\nHover over the tracks to play them! You may need to click on the page to get the audio to play.`}
+				position="0 2.5 -3"
+				color="#ffffff"
+				align="center"></a-text>
 			{
 				allTracks.map((tracks, topTracksIndex) => {
 					return tracks.map((track: any, index: number) => {
